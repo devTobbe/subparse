@@ -1,0 +1,16 @@
+[Script Info]
+Title: Example SSA Subtitle
+Original Script: Your Name
+ScriptType: v4.00
+Collisions: Normal
+PlayDepth: 0
+
+[V4 Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
+Style: Default,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H64000000,-1,0,1,1,0,2,10,10,10,0,0
+
+[Events]
+Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: Marked=0,0:00:01.00,0:00:05.00,Default,,0,0,0,,Hello, this is a test subtitle.
+Dialogue: Marked=0,0:00:06.00,0:00:10.00,Default,,0,0,0,,Another line of text here.
+Dialogue: Marked=0,0:00:12.00,0:00:15.00,Default,,0,0,0,,This is the final test line.
