@@ -9,6 +9,9 @@ This is a test.
 3
 00:00:08,500 --> 00:00:12,000
 This better be working or I am gonna completely lose it...
+This is another line
+There can be multiple...
+Be ready for that
 
 4
 00:00:13,000 --> 00:00:15,000
