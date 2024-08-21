@@ -1,5 +1,5 @@
 # subtitle-parser
-A simple subtitle-parser that outputs a parsed json file
+A simple subtitle-parser that outputs a json file.
 
 ## Planned Supported formats
 - .srt
