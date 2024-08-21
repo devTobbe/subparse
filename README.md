@@ -1,5 +1,13 @@
 # subtitle-parser
 A simple subtitle-parser that outputs a parsed json file
 
-## Supported formats
-* .srt
+## Planned Supported formats
+- .srt
+- .ass
+- .ssa
+
+## TODO
+- [] add example file for .ass and .ssa files
+- [] .ass function
+- [] .ssa function
+
