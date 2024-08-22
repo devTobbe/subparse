@@ -32,33 +32,57 @@ export function parseSRT(data: string): string {
 }
 
 /** Function that parses .ssa data after file is handled*/
-function parseSSA(data: string) {
-  const subs = data.split("\n");
-  const events = subs[2];
+export function parseSSA(data: string): string {
+  // Split the data into sections by double newlines
+  const subs = data.split("\n\n");
 
-  //Remove format line and isolate dialogue lines.
-  for (let i = 0; i < events.length; i++) {
-    const line = events[i].trim();
+  // Check if there are at least 3 sections
+  if (subs.length < 3) {
+    throw new Error("Invalid SSA format: Not enough sections");
+  }
 
-    if (line.startsWith("Format:")) {
-      continue;
+  // Split the third section (events) into lines
+  const events = subs[2].split("\n");
+
+  let lineCount: number = 0;
+  
+  // Map through events and parse dialogue lines
+  const mapped = events.map((eventLine) => {
+    // Check if the line starts with "Dialogue"
+    if (!eventLine.startsWith("Dialogue")) {
+      return null;
     }
 
-    //Remove the Dialogue: poriton and split up the data
-    const dialogueLine = line.replace("Dialogue:", "").split(",");
+    // Remove the "Dialogue:" prefix and split by comma
+    const splits = eventLine.slice(10).split(',');
 
+    // Ensure the splits have enough elements
+    if (splits.length < 9) {
+      return null;
+    }
 
+    // Parse the dialogue line
+    const parsed: Parsed = {
+      line: lineCount,
+      start: splits[1],
+      end: splits[2],
+      text: splits.slice(9).join(',') // Join with a comma to handle multiline text
+    };
+    
+    lineCount += 1;
+    return parsed;
+  }).filter(Boolean); // Remove null values
 
-  }
+  // Convert the result to JSON and return
+  return JSON.stringify(mapped);
 }
 
 /** Function that parses .ass data after file is handled*/
-function parseASS(data: string) {}
+function parseASS(data: string) { }
 
 /** */
 function parseSubtitle(name: string, content: string) {
   if (name.endsWith(".srt")) {
-    return parseSRT(content);
   } else if (name.endsWith(".ass")) {
     return parseSSA(content);
   } else if (name.endsWith(".ssa")) {
