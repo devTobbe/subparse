@@ -45,33 +45,41 @@ export function parseSSA(data: string): string {
   const events = subs[2].split("\n");
 
   let lineCount: number = 0;
-  
+
   // Map through events and parse dialogue lines
-  const mapped = events.map((eventLine) => {
-    // Check if the line starts with "Dialogue"
-    if (!eventLine.startsWith("Dialogue")) {
-      return null;
-    }
+  const mapped = events
+    .map((eventLine) => {
+      // Check if the line starts with "Dialogue"
+      if (!eventLine.startsWith("Dialogue")) {
+        return null;
+      }
 
-    // Remove the "Dialogue:" prefix and split by comma
-    const splits = eventLine.slice(10).split(',');
+      // Remove the "Dialogue:" prefix and split by comma
+      const splits = eventLine.slice(10).split(",");
 
-    // Ensure the splits have enough elements
-    if (splits.length < 9) {
-      return null;
-    }
+      // Ensure the splits have enough elements
+      if (splits.length < 9) {
+        return null;
+      }
 
-    // Parse the dialogue line
-    const parsed: Parsed = {
-      line: lineCount,
-      start: splits[1],
-      end: splits[2],
-      text: splits.slice(9).join(',') // Join with a comma to handle multiline text
-    };
-    
-    lineCount += 1;
-    return parsed;
-  }).filter(Boolean); // Remove null values
+      //Handles potential .ass file styles
+      const ass = splits
+        .slice(9)
+        .join(",")
+        .replace(/{[^}]*}/g, "");
+
+      // Parse the dialogue line
+      const parsed: Parsed = {
+        line: lineCount,
+        start: splits[1],
+        end: splits[2],
+        text: ass,
+      };
+
+      lineCount += 1;
+      return parsed;
+    })
+    .filter(Boolean); // Remove null values
 
   // Convert the result to JSON and return
   return JSON.stringify(mapped);
