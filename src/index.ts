@@ -86,16 +86,21 @@ export function parseSSA(data: string): string {
 }
 
 /** Function that parses .ass data after file is handled*/
-function parseASS(data: string) { }
+function parseASS(data: string) {}
 
-/** */
-function parseSubtitle(name: string, content: string) {
-  if (name.endsWith(".srt")) {
-  } else if (name.endsWith(".ass")) {
-    return parseSSA(content);
-  } else if (name.endsWith(".ssa")) {
-    return parseASS(content);
+/**
+ * This function parses the initial file and then determines how the file should be parsed.
+ * @param {string} fileName - name of the file to be parsed.
+ * @param {string} fileContent - content of the file to be parsed.
+ */
+export function parseFile(fileName: string, fileContent: string) : string {
+  if (fileName.endsWith(".srt")) {
+    return parseSRT(fileContent);
+  } else if (fileName.endsWith(".ssa")) {
+    return parseSSA(fileContent);
   } else {
-    throw new Error(`Unsupported file format: ${name}`);
+    throw new Error(
+        'Unsupported file format: '+fileName+', Please provide files in formats: .srt, .ssa or .ass',
+    );
   }
 }
