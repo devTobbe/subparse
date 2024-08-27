@@ -7,7 +7,8 @@ A simple subtitle-parser that outputs a json file.
 - .ssa
 
 ## TODO
-- [ ] add example file for .ass and .ssa files
-- [ ] .ass function
+- [x] add example file for .ass and .ssa files
+- [x] .ass function
 - [x] .ssa function
-
+- [x] .ssa function
+- [ ] Rework with regex (Why didn't I use this from the start..?)
