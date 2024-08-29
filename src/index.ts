@@ -1,4 +1,4 @@
-interface Parsed {
+interface parsed {
   line: number;
   start: string;
   end: string;
@@ -9,26 +9,33 @@ interface Parsed {
  * Notes: Hopefully works now but the final returned value is an array of strings of JSON objects. The whole thing should be JSON
  * */
 export function parseSRT(data: string): string {
-  const subs = data.split("\n\n");
-  const mapped = subs.map((subs) => {
-    const splits = subs.split("\n");
-    const index = splits[0];
-    const time = splits[1].split("-->");
-    const initial = time[0].trim();
-    const final = time[1].trim();
-    const line = splits.slice(2).join(" ");
+  // Define the regex pattern
+  const regex = /(?<Line>\d+)\n(?<StartTime>\d+\:\d+\:\d+\,\d+)\s+\-\-\>\s+(?<EndTime>\d+\:\d+\:\d+\,\d+)\n(?<Content>(?:[^\n]+\n?)+)(?=\n\n|\n\d+\n|$)/gm;
 
-    const parsed: Parsed = {
-      line: parseInt(index),
-      start: initial,
-      end: final,
-      text: line,
-    };
+  // Initialize an array to store the parsed subtitles
+  const parsedSubtitles: parsed[] = [];
 
-    return parsed;
-  });
+  // Use regex to match all subtitle blocks in the data
+  const matches = data.matchAll(regex);
 
-  return JSON.stringify(mapped);
+  // Iterate over all matches
+  for (const match of matches) {
+    const { Line, StartTime, EndTime, Content } = match.groups || {};
+
+    // Ensure that all necessary groups are present
+    if (Line && StartTime && EndTime && Content) {
+      // Create a Parsed object and push it to the array
+      parsedSubtitles.push({
+        line: parseInt(Line, 10),
+        start: StartTime,
+        end: EndTime,
+        text: Content.replace(/\r?\n/g, ' ').trim()// Normalize whitespace
+      });
+    }
+  }
+
+  // Convert the array of Parsed objects to a JSON string
+  return JSON.stringify(parsedSubtitles);
 }
 
 /** Function that parses .ssa data after file is handled*/
@@ -69,7 +76,7 @@ export function parseSSA(data: string): string {
         .replace(/{[^}]*}/g, "");
 
       // Parse the dialogue line
-      const parsed: Parsed = {
+      const parsed: parsed = {
         line: lineCount,
         start: splits[1],
         end: splits[2],
@@ -86,21 +93,23 @@ export function parseSSA(data: string): string {
 }
 
 /** Function that parses .ass data after file is handled*/
-function parseASS(data: string) {}
+function parseASS(data: string) { }
 
 /**
  * This function parses the initial file and then determines how the file should be parsed.
  * @param {string} fileName - name of the file to be parsed.
  * @param {string} fileContent - content of the file to be parsed.
  */
-export function parseFile(fileName: string, fileContent: string) : string {
+export function parseFile(fileName: string, fileContent: string): string {
   if (fileName.endsWith(".srt")) {
     return parseSRT(fileContent);
   } else if (fileName.endsWith(".ssa")) {
     return parseSSA(fileContent);
   } else {
     throw new Error(
-        'Unsupported file format: '+fileName+', Please provide files in formats: .srt, .ssa or .ass',
+      "Unsupported file format: " +
+      fileName +
+      ", Please provide files in formats: .srt, .ssa or .ass",
     );
   }
 }
