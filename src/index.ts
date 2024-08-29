@@ -4,10 +4,11 @@ interface parsed {
   end: string;
   text: string;
 }
-
-/** Function that parses .srt data after file is handled
- * Notes: Hopefully works now but the final returned value is an array of strings of JSON objects. The whole thing should be JSON
- * */
+/**
+ * This function takes in the data of an .srt file and parses it into a JSON string.
+ * @param {string} data - name of the file to be parsed.
+ * @returns {string} returns a JSON string with parsed .srt data.
+ */
 export function parseSRT(data: string): string {
   // Define the regex pattern
   const regex = /(?<Line>\d+)\n(?<StartTime>\d+\:\d+\:\d+\,\d+)\s+\-\-\>\s+(?<EndTime>\d+\:\d+\:\d+\,\d+)\n(?<Content>(?:[^\n]+\n?)+)(?=\n\n|\n\d+\n|$)/gm;
