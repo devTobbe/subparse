@@ -1,6 +1,6 @@
-import { parseSSA } from '../src/index';
+import { parseASS } from '../src/index';
 
-test('parseSSA should correctly parse SSA data with multiple lines of text', () => {
+test('parseASS should correctly parse SSA data with multiple lines of text', () => {
   const ssaData = `[Script Info]
 Title: Example Subtitle
 Original Script: Example Script Writer
@@ -20,24 +20,24 @@ Dialogue: Marked=0,0:00:08.00,0:00:10.00,Default,,0,0,0,,Single line subtitle.`;
 
   const expectedOutput = JSON.stringify([
     {
-      line: 0,
+      line: 1,
       start: "0:00:01.00",
       end: "0:00:04.00",
       text: "Hello, world! This is a subtitle.",
     },
     {
-      line: 1,
+      line: 2,
       start: "0:00:05.00",
       end: "0:00:07.00",
       text: "Another subtitle line.",
     },
     {
-      line: 2,
+      line: 3,
       start: "0:00:08.00",
       end: "0:00:10.00",
       text: "Single line subtitle.",
     },
   ]);
 
-  expect(parseSSA(ssaData)).toBe(expectedOutput);
+  expect(parseASS(ssaData)).toBe(expectedOutput);
 });
