@@ -5,16 +5,17 @@ interface parsed {
   text: string;
 }
 /**
- * This function takes in the data of an .srt file and parses it into a JSON string.
- * @param {string} data - name of the file to be parsed.
- * @returns {string} returns a JSON string with parsed .srt data.
+ * this function takes in the data of an .srt file and parses it into a json string.
+ * @param {string} data - data to be parsed, in .srt format
+ * @returns {string} returns a json string with parsed .srt data.
  */
 export function parseSRT(data: string): string {
   // Define the regex pattern
-  const regex = /(?<Line>\d+)\n(?<StartTime>\d+\:\d+\:\d+\,\d+)\s+\-\-\>\s+(?<EndTime>\d+\:\d+\:\d+\,\d+)\n(?<Content>(?:[^\n]+\n?)+)(?=\n\n|\n\d+\n|$)/gm;
+  const regex =
+    /(?<Line>\d+)\n(?<StartTime>\d+\:\d+\:\d+\,\d+)\s+\-\-\>\s+(?<EndTime>\d+\:\d+\:\d+\,\d+)\n(?<Content>(?:[^\n]+\n?)+)(?=\n\n|\n\d+\n|$)/gm;
 
   // Initialize an array to store the parsed subtitles
-  const parsedSubtitles: parsed[] = [];
+  const parsedSubs: parsed[] = [];
 
   // Use regex to match all subtitle blocks in the data
   const matches = data.matchAll(regex);
@@ -26,20 +27,48 @@ export function parseSRT(data: string): string {
     // Ensure that all necessary groups are present
     if (Line && StartTime && EndTime && Content) {
       // Create a Parsed object and push it to the array
-      parsedSubtitles.push({
+      parsedSubs.push({
         line: parseInt(Line, 10),
         start: StartTime,
         end: EndTime,
-        text: Content.replace(/\r?\n/g, ' ').trim()// Normalize whitespace
+        text: Content.replace(/\r?\n/g, " ").trim(), // Normalize whitespace
       });
     }
   }
 
   // Convert the array of Parsed objects to a JSON string
-  return JSON.stringify(parsedSubtitles);
+  return JSON.stringify(parsedSubs);
+}
+/**
+ * this function takes in the data of an .ass or .ssa file and parses it into a json string.
+ * @param {string} data - data to be parsed, in .ass format
+ * @returns {string} returns a json string with parsed .ass data.
+ */
+export function parseASS(data: string) {
+  const regex =
+    /^Dialogue:\s*(?:|\w+\W)(?:Marked=\d+,\s*)?\d+,(?<StartTime>\d+:\d+:\d+\.\d+),(?<EndTime>\d+:\d+:\d+\.\d+),[^,]*,[^,]*,\d+,\d+,\d+,[^,]*,(?<Content>.+)$/gm;
+
+  const parsedSubs: parsed[] = [];
+
+  const matches = data.matchAll(regex);
+  let currentLine: number = 1;
+  for (const match of matches) {
+    const { StartTime, EndTime, Content } = match.groups || {};
+
+    if (StartTime && EndTime && Content) {
+      parsedSubs.push({
+        line: currentLine,
+        start: StartTime,
+        end: EndTime,
+        text: Content.trim(),
+      });
+      currentLine++;
+    }
+  }
+  return JSON.stringify(parsedSubs);
 }
 
-/** Function that parses .ssa data after file is handled*/
+/** function that parses .ssa data after file is handled*/
 export function parseSSA(data: string): string {
   // Split the data into sections by double newlines
   const subs = data.split("\n\n");
@@ -92,9 +121,6 @@ export function parseSSA(data: string): string {
   // Convert the result to JSON and return
   return JSON.stringify(mapped);
 }
-
-/** Function that parses .ass data after file is handled*/
-function parseASS(data: string) { }
 
 /**
  * This function parses the initial file and then determines how the file should be parsed.
