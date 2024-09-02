@@ -18,3 +18,4 @@ A simple subtitle parser that outputs a json object with the parsed content.
 - [x] Rework with regex (Why didn't I use this from the start..?)
 - [ ] Refactor for easy scaleability
 - [ ] Extract similar code and refactor
+- [ ] Allow users to customize the output JSON format. (Maybe)
