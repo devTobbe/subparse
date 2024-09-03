@@ -1,9 +1,34 @@
+//Represents a single subtitle line entry.
 interface parsed {
   line: number;
   start: string;
   end: string;
   text: string;
 }
+
+
+/**
+ * Represents a function that parses subtitle content.
+ * @param {string} content - The content of the subtitle file to be parsed.
+ * @returns {string} - A JSON string representing the parsed subtitle data.
+ */
+type ParserFunction = (content: string) => string;
+
+/**
+ * A mapping of file extensions to their corresponding parsing functions.
+ * This object associates each subtitle file extension with a function that can
+ * parse that specific file format into a JSON string.
+ * 
+ * @type {Record<string, ParserFunction>}
+ * @property {string} ".srt" - The parser function for SRT subtitle files.
+ * @property {string} ".ass" - The parser function for ASS subtitle files.
+ * @property {string} ".ssa" - The parser function for SSA subtitle files.
+ */
+const parsers: Record<string, ParserFunction> = {
+  ".srt": parseSRT,
+  ".ass": parseASS,
+  ".ssa": parseASS,
+};
 
 /**
  * This function takes in the data of an .srt file and parses it into a json string.
@@ -87,16 +112,21 @@ export function parseASS(data: string) {
  * @returns {string} stringified json object containing all parsed data.
  */
 export function parseFile(fileName: string, fileContent: string): string {
-  if (fileName.endsWith(".srt")) {
-    return parseSRT(fileContent);
-  }
-  if (fileName.endsWith(".ass" || ".ssa")) {
-    return parseASS(fileContent);
-  } else {
+  const fileExtension = Object.keys(parsers).find((extension) =>
+    fileName.endsWith(extension),
+  );
+
+  //Throw error if unsupported file extension is used.
+  if (!fileExtension) {
     throw new Error(
       "Unsupported file format: " +
       fileName +
       ", Please provide files in formats: .srt, .ssa or .ass",
     );
   }
+
+  //Fetch the correct function, run it and return the returned string
+  const parser = parsers[fileExtension];
+  return parser(fileContent)
+
 }
