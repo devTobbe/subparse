@@ -1,7 +1,6 @@
-// tests/index.test.ts
-import { parseSRT } from "../src/index";
+import { parseSRT, parseOptions } from '../src/index';
 
-//Test a generic .srt test file
+// Test a generic .srt test file
 test("parseSRT should correctly parse SRT data with multiple lines of text", () => {
   const srtData = `1
 00:00:01,000 --> 00:00:04,000
@@ -14,6 +13,13 @@ Hello again!
 3
 00:00:08,000 --> 00:00:10,000
 Single line subtitle.`;
+
+  const options: parseOptions = {
+    includeLine: true,
+    includeStart: true,
+    includeEnd: true,
+    includeText: true,
+  };
 
   const expectedOutput = JSON.stringify([
     {
@@ -36,11 +42,10 @@ Single line subtitle.`;
     },
   ]);
 
-  expect(parseSRT(srtData)).toBe(expectedOutput);
+  expect(parseSRT(srtData, options)).toBe(expectedOutput);
 });
 
-
-//Test a .srt file with multiple lines per subtitle
+// Test a .srt file with multiple lines per subtitle
 test("parseSRT should correctly parse subtitles with multiple lines", () => {
   const srtData = `1
 00:00:01,000 --> 00:00:04,000
@@ -55,6 +60,13 @@ with more than one line.
 3
 00:00:08,000 --> 00:00:10,000
 Single line subtitle.`;
+
+  const options: parseOptions = {
+    includeLine: true,
+    includeStart: true,
+    includeEnd: true,
+    includeText: true,
+  };
 
   const expectedOutput = JSON.stringify([
     {
@@ -77,21 +89,36 @@ Single line subtitle.`;
     },
   ]);
 
-  expect(parseSRT(srtData)).toBe(expectedOutput);
+  expect(parseSRT(srtData, options)).toBe(expectedOutput);
 });
 
-//Test input with no content.
+// Test input with no content
 test("parseSRT should return an empty array for empty input", () => {
   const srtData = "";
+  const options: parseOptions = {
+    includeLine: true,
+    includeStart: true,
+    includeEnd: true,
+    includeText: true,
+  };
+
   const expectedOutput = JSON.stringify([]);
-  expect(parseSRT(srtData)).toBe(expectedOutput);
+  expect(parseSRT(srtData, options)).toBe(expectedOutput);
 });
 
-//Test single line subtitle file
+// Test single line subtitle file
 test("parseSRT should correctly parse single line subtitles", () => {
   const srtData = `1
 00:00:01,000 --> 00:00:04,000
 Hello, world!`;
+
+  const options: parseOptions = {
+    includeLine: true,
+    includeStart: true,
+    includeEnd: true,
+    includeText: true,
+  };
+
   const expectedOutput = JSON.stringify([
     {
       line: 1,
@@ -100,6 +127,6 @@ Hello, world!`;
       text: "Hello, world!",
     },
   ]);
-  expect(parseSRT(srtData)).toBe(expectedOutput);
-});
 
+  expect(parseSRT(srtData, options)).toBe(expectedOutput);
+});
