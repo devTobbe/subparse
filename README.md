@@ -36,6 +36,6 @@ Im not here yet either T-T
 - [x] add support for .ssa
 - [x] Rework with regex (Why didn't I use this from the start..?)
 - [x] Refactor for easy scaleability
-- [ ] Allow users to customize the output JSON format. (Maybe)
+- [x] Allow users to customize the output JSON format.
 - [ ] support for .sub
 - [ ] support for .vtt
