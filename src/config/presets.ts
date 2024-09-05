@@ -26,8 +26,8 @@ export function fetchPreset(preset: ParsePreset): ParseOptions {
     case "noLine":
       return {
         includeLine: false,
-        includeStart: false,
-        includeEnd: false,
+        includeStart: true,
+        includeEnd: true,
         includeText: true,
       };
     case "textOnly":
