@@ -18,16 +18,18 @@ Homie I aint there yet frfr ong
 To use **SubParse** in your project, follow these steps:
 
 1. **Import the Library:**
+
    ```typescript
-   import { parseFile } from 'subparse';
+   import { parseFile } from "subparse";
    ```
 
 2. **Choose a Preset:**
 
    Here is a list of available presets you can choose from:
-   - `full` - Includes all available information—line number, start time, end time, and text. 
+
+   - `full` - Includes all available information—line number, start time, end time, and text.
    - `minimal` - Includes only the start time and text. Omits line number and end time.
-   - `noLine` -  Includes start time, end time, and subtitle text, excluding line number.
+   - `noLine` - Includes start time, end time, and subtitle text, excluding line number.
    - `textOnly` - Includes only the subtitle text, excluding line number, start time, and end time.
 
    The `preset` parameter is used to customize the output format. Select one from the list and use it directly.
@@ -37,24 +39,28 @@ To use **SubParse** in your project, follow these steps:
    Use the `parseFile` function to parse your subtitle files. Provide the file name, file content, and chosen preset.
 
    ```typescript
-   const fileName = 'example.srt';
+   const fileName = "example.srt";
    const fileContent = `1\n00:00:01,000 --> 00:00:04,000\nHello, world!`;
-   const preset = 'full';  // Choose from the list of presets
+   const preset = "full"; // Choose from the list of presets
 
    const jsonOutput = parseFile(fileName, fileContent, preset);
    console.log(jsonOutput);
    ```
-    Which will result in the following output:
+
+   Which will result in the following output:
+
    ```json
-[
-  {
-    "line": 1,
-    "start": "00:00:01,000",
-    "end": "00:00:04,000",
-    "text": "Hello, world!"
-  }
-]
-    ```
+   [
+     {
+       "line": 1,
+       "start": "00:00:01,000",
+       "end": "00:00:04,000",
+       "text": "Hello, world!"
+     }
+   ]
+   ```
+
+```
 
 ---
 
@@ -79,3 +85,4 @@ To use **SubParse** in your project, follow these steps:
 - [ ] support for .vtt
 - [x] restructure codebase
 - [ ] add automatic format detection
+```
