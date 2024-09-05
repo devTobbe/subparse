@@ -4,10 +4,10 @@ A TypeScript library for parsing subtitle files in `.srt`, `.ass`, and `.ssa` fo
 
 ## 🚀 Features
 
-- **Parse Several Subtitle File Formats**: Convert `.srt`, `.ass`, `.ssa` subtitle files into JSON.
-- **Flexible File Handling**: Automatically detects and parses the file based on extension.
-- **Output Options** : Choose between a set of output options to customize how the JSON is output.
-- **More to come!** : Hopefully...
+- **Supports Multiple Subtitle Formats**: Convert subtitle files in `.srt`, `.ass`, and `.ssa` formats into JSON.
+- **Automatic File Detection**: Automatically identifies and parses subtitle files based on their extension.
+- **Customizable Output**: Select from various output options to tailor the JSON format to your needs.
+- **More Features Coming Soon...**: 👽 I hope...
 
 ## 📦 Installation
 
@@ -59,9 +59,6 @@ To use **SubParse** in your project, follow these steps:
      }
    ]
    ```
-
-
----
 
 ## 🗂️ Planned Supported formats
 
