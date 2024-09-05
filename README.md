@@ -39,3 +39,5 @@ Im not here yet either T-T
 - [x] Allow users to customize the output JSON format.
 - [ ] support for .sub
 - [ ] support for .vtt
+- [ ] restructure codebase
+- [ ] add automatic format detection
