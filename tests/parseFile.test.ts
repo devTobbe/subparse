@@ -32,6 +32,7 @@ Dialogue: Marked=0,0:00:01.00,0:00:04.00,Default,,0,0,0,,Hello, world! This is a
 Dialogue: Marked=0,0:00:05.00,0:00:07.00,Default,,0,0,0,,Another subtitle line.
 Dialogue: Marked=0,0:00:08.00,0:00:10.00,Default,,0,0,0,,Single line subtitle.`;
 
+// SRT expected outputs
 const srtExpectedFull = JSON.stringify([
   {
     line: 1,
@@ -51,7 +52,7 @@ const srtExpectedFull = JSON.stringify([
     end: "00:00:10,000",
     text: "Single line subtitle.",
   },
-]).replace(/\s+/g, ' ');
+]);
 
 const srtExpectedMinimal = JSON.stringify([
   {
@@ -66,9 +67,9 @@ const srtExpectedMinimal = JSON.stringify([
     line: 3,
     text: "Single line subtitle.",
   },
-]).replace(/\s+/g, ' ');
+]);
 
-const srtExpectedNoLine = JSON.stringify([
+const srtExpectedTextOnly = JSON.stringify([
   {
     text: "Hello, world! This is a subtitle with multiple lines.",
   },
@@ -78,8 +79,27 @@ const srtExpectedNoLine = JSON.stringify([
   {
     text: "Single line subtitle.",
   },
-]).replace(/\s+/g, ' ');
+]);
 
+const srtExpectedNoLine = JSON.stringify([
+  {
+    start: "00:00:01,000",
+    end: "00:00:04,000",
+    text: "Hello, world! This is a subtitle with multiple lines.",
+  },
+  {
+    start: "00:00:05,000",
+    end: "00:00:07,000",
+    text: "Another subtitle with more than one line.",
+  },
+  {
+    start: "00:00:08,000",
+    end: "00:00:10,000",
+    text: "Single line subtitle.",
+  },
+]);
+
+// ASS expected outputs
 const assExpectedFull = JSON.stringify([
   {
     line: 1,
@@ -99,7 +119,7 @@ const assExpectedFull = JSON.stringify([
     end: "0:00:10.00",
     text: "Single line subtitle.",
   },
-]).replace(/\s+/g, ' ');
+]);
 
 const assExpectedMinimal = JSON.stringify([
   {
@@ -114,9 +134,9 @@ const assExpectedMinimal = JSON.stringify([
     line: 3,
     text: "Single line subtitle.",
   },
-]).replace(/\s+/g, ' ');
+]);
 
-const assExpectedNoLine = JSON.stringify([
+const assExpectedTextOnly = JSON.stringify([
   {
     text: "Hello, world! This is a subtitle.",
   },
@@ -126,7 +146,25 @@ const assExpectedNoLine = JSON.stringify([
   {
     text: "Single line subtitle.",
   },
-]).replace(/\s+/g, ' ');
+]);
+
+const assExpectedNoLine = JSON.stringify([
+  {
+    start: "0:00:01.00",
+    end: "0:00:04.00",
+    text: "Hello, world! This is a subtitle.",
+  },
+  {
+    start: "0:00:05.00",
+    end: "0:00:07.00",
+    text: "Another subtitle line.",
+  },
+  {
+    start: "0:00:08.00",
+    end: "0:00:10.00",
+    text: "Single line subtitle.",
+  },
+]);
 
 // Test cases using exact preset options
 
@@ -143,7 +181,7 @@ test("parseFile should correctly parse an .srt file with 'noLine' preset", () =>
 });
 
 test("parseFile should correctly parse an .srt file with 'textOnly' preset", () => {
-  expect(parseFile("example.srt", srtData, "textOnly")).toBe(srtExpectedNoLine);
+  expect(parseFile("example.srt", srtData, "textOnly")).toBe(srtExpectedTextOnly);
 });
 
 test("parseFile should correctly parse an .ass file with 'full' preset", () => {
@@ -159,7 +197,7 @@ test("parseFile should correctly parse an .ass file with 'noLine' preset", () =>
 });
 
 test("parseFile should correctly parse an .ass file with 'textOnly' preset", () => {
-  expect(parseFile("example.ass", assData, "textOnly")).toBe(assExpectedNoLine);
+  expect(parseFile("example.ass", assData, "textOnly")).toBe(assExpectedTextOnly);
 });
 
 // Test for unsupported file format
