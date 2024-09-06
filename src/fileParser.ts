@@ -1,6 +1,6 @@
 import { parseSRT } from "./parsers/srtParser";
 import { parseASS } from "./parsers/assParser";
-import { fetchPreset, ParsePreset } from "./config/presets";
+import { fetchPreset } from "./config/presets";
 import { ParseOptions } from "./config/parseOptions";
 
 export type ParserFunction = (content: string, options: ParseOptions) => string;
@@ -24,7 +24,7 @@ const Parsers: Record<string, ParserFunction> = {
 export function parseFile(
   fileName: string,
   fileContent: string,
-  preset: ParsePreset,
+  preset: string,
 ): string {
   const fileExtension = Object.keys(Parsers).find((ext) =>
     fileName.endsWith(ext),

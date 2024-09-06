@@ -1,13 +1,11 @@
 import { ParseOptions } from "./parseOptions";
 
-export type ParsePreset = "full" | "minimal" | "noLine" | "textOnly";
-
 /**
  * Returns the parse options for the given preset.
  * @param {ParsePreset} preset - The preset option.
  * @returns {ParseOptions} - The corresponding parse options.
  */
-export function fetchPreset(preset: ParsePreset): ParseOptions {
+export function fetchPreset(preset: string): ParseOptions {
   switch (preset) {
     case "full":
       return {
@@ -39,6 +37,7 @@ export function fetchPreset(preset: ParsePreset): ParseOptions {
       };
     default:
       return {
+        //Throw error later on
         includeLine: true,
         includeStart: true,
         includeEnd: true,
