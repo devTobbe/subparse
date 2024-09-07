@@ -207,7 +207,7 @@ test("parseFile should throw an error for unsupported file formats", () => {
 
   expect(() => {
     parseFile(fileName, fileContent, "full");
-  }).toThrow("Unsupported file format: example.mp4, Please provide files in formats: .srt, .ssa or .ass");
+  }).toThrow("Unsupported file format: example.mp4, Please provide files in formats: .srt, .ass, .ssa, .vtt");
 });
 
 // Test for empty file content
