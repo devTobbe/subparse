@@ -78,7 +78,7 @@ To use **SubParse** in your project, follow these steps:
 - [x] Refactor for easy scaleability
 - [x] Allow users to customize the output JSON format.
 - [ ] support for .sub
-- [ ] support for .vtt
+- [x] support for .vtt
 - [x] restructure codebase
 - [ ] add automatic format detection
 - [ ] add ci/cd
