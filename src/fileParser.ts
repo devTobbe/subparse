@@ -1,5 +1,6 @@
 import { parseSRT } from "./parsers/srtParser";
 import { parseASS } from "./parsers/assParser";
+import { parseVTT } from "./parsers/vttParser";
 import { fetchPreset } from "./config/presets";
 import { ParseOptions } from "./config/parseOptions";
 
@@ -12,6 +13,7 @@ const Parsers: Record<string, ParserFunction> = {
   ".srt": parseSRT,
   ".ass": parseASS,
   ".ssa": parseASS,
+  ".vtt": parseVTT,
 };
 
 /**
@@ -34,7 +36,7 @@ export function parseFile(
     throw new Error(
       "Unsupported file format: " +
         fileName +
-        ", Please provide files in formats: .srt, .ssa or .ass",
+        ", Please provide files in formats: " + Object.keys(Parsers).join(', ')
     );
   }
 
