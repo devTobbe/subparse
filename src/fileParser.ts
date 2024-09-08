@@ -37,7 +37,7 @@ export function parseFile(fileContent: string, preset: string): string {
       return parseVTT(fileContent, options);
     default:
       throw new Error(
-        "Unsupported file format, Please provide files in formats: " +
+        "Unsupported file format. Please provide files in formats: " +
         Object.keys(Parsers).join(", "),
       );
   }
