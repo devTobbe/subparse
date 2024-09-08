@@ -29,16 +29,16 @@ export function parseFile(fileContent: string, preset: string): string {
   const options = fetchPreset(preset);
 
   switch (format) {
-    case 'srt':
+    case "srt":
       return parseSRT(fileContent, options);
-    case 'ass':
+    case "ass":
       return parseASS(fileContent, options);
-    case 'vtt':
+    case "vtt":
       return parseVTT(fileContent, options);
     default:
       throw new Error(
         "Unsupported file format. Please provide files in formats: " +
-        Object.keys(Parsers).join(", "),
+          Object.keys(Parsers).join(", "),
       );
   }
 }
