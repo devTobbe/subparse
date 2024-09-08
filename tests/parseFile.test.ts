@@ -169,53 +169,56 @@ const assExpectedNoLine = JSON.stringify([
 // Test cases using exact preset options
 
 test("parseFile should correctly parse an .srt file with 'full' preset", () => {
-  expect(parseFile("example.srt", srtData, "full")).toBe(srtExpectedFull);
+  expect(parseFile(srtData, "full")).toBe(srtExpectedFull);
 });
 
 test("parseFile should correctly parse an .srt file with 'minimal' preset", () => {
-  expect(parseFile("example.srt", srtData, "minimal")).toBe(srtExpectedMinimal);
+  expect(parseFile(srtData, "minimal")).toBe(srtExpectedMinimal);
 });
 
 test("parseFile should correctly parse an .srt file with 'noLine' preset", () => {
-  expect(parseFile("example.srt", srtData, "noLine")).toBe(srtExpectedNoLine);
+  expect(parseFile(srtData, "noLine")).toBe(srtExpectedNoLine);
 });
 
 test("parseFile should correctly parse an .srt file with 'textOnly' preset", () => {
-  expect(parseFile("example.srt", srtData, "textOnly")).toBe(srtExpectedTextOnly);
+  expect(parseFile(srtData, "textOnly")).toBe(srtExpectedTextOnly);
 });
 
 test("parseFile should correctly parse an .ass file with 'full' preset", () => {
-  expect(parseFile("example.ass", assData, "full")).toBe(assExpectedFull);
+  expect(parseFile(assData, "full")).toBe(assExpectedFull);
 });
 
 test("parseFile should correctly parse an .ass file with 'minimal' preset", () => {
-  expect(parseFile("example.ass", assData, "minimal")).toBe(assExpectedMinimal);
+  expect(parseFile(assData, "minimal")).toBe(assExpectedMinimal);
 });
 
 test("parseFile should correctly parse an .ass file with 'noLine' preset", () => {
-  expect(parseFile("example.ass", assData, "noLine")).toBe(assExpectedNoLine);
+  expect(parseFile(assData, "noLine")).toBe(assExpectedNoLine);
 });
 
 test("parseFile should correctly parse an .ass file with 'textOnly' preset", () => {
-  expect(parseFile("example.ass", assData, "textOnly")).toBe(assExpectedTextOnly);
+  expect(parseFile(assData, "textOnly")).toBe(assExpectedTextOnly);
 });
 
 // Test for unsupported file format
 test("parseFile should throw an error for unsupported file formats", () => {
-  const fileName = "example.mp4";
   const fileContent = "This is not a subtitle file.";
 
   expect(() => {
-    parseFile(fileName, fileContent, "full");
-  }).toThrow("Unsupported file format: example.mp4, Please provide files in formats: .srt, .ass, .ssa, .vtt");
+    parseFile(fileContent, "full");
+  }).toThrow(
+    "Unsupported file format. Please provide files in formats: .srt, .ass, .ssa, .vtt",
+  );
 });
 
-// Test for empty file content
-test("parseFile should handle empty file content correctly", () => {
+test("parseFile should throw an error for empty file content", () => {
   const srtData = "";
-  const expectedOutput = JSON.stringify([]);
 
-  expect(parseFile("empty.srt", srtData, "full")).toBe(expectedOutput);
+  expect(() => {
+    parseFile(srtData, "full");
+  }).toThrow(
+    "Unsupported file format. Please provide files in formats: .srt, .ass, .ssa, .vtt",
+  );
 });
 
 // Test for file with only metadata (for .ass format)
@@ -234,5 +237,5 @@ Style: Default,Arial,20,65535,-2147483640,-2147483640,-2147483640,-1,0,1,1,1,2,1
 [Events]
 Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text`;
 
-  expect(parseFile("metadata_only.ass", assDataMetadataOnly, "full")).toBe(JSON.stringify([]));
+  expect(parseFile(assDataMetadataOnly, "full")).toBe(JSON.stringify([]));
 });
