@@ -1,5 +1,5 @@
 import { Caption, ParseOptions } from "../config/parseOptions";
-import { regexUtils } from "../utils/regexUtils";
+import { regexParse } from "../utils/regexUtils";
 
 /**
  * Parses VTT subtitle data into a JSON string.
@@ -8,7 +8,7 @@ import { regexUtils } from "../utils/regexUtils";
  * @returns {string} - JSON string of parsed subtitles.
  */
 export function parseVTT(data: string, options: ParseOptions): string {
-  const regex = regexUtils.vttRegex;
+  const regex = regexParse.vtt;
   const parsedSubs: Caption[] = [];
   let currentLine = 1; // Keep this in the case that the VTT files doesn't have line numbers
   const matches = data.matchAll(regex);

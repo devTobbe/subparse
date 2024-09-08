@@ -1,5 +1,5 @@
 import { Caption, ParseOptions } from "../config/parseOptions";
-import { regexUtils } from "../utils/regexUtils";
+import { regexParse } from "../utils/regexUtils";
 
 /**
  * Parses ASS/SSA subtitle data into a JSON string.
@@ -8,7 +8,7 @@ import { regexUtils } from "../utils/regexUtils";
  * @returns {string} - JSON string of parsed subtitles.
  */
 export function parseASS(data: string, options: ParseOptions): string {
-  const regex = regexUtils.assRegex;
+  const regex = regexParse.ass;
   const parsedSubs: Caption[] = [];
   let currentLine = 1;
   const matches = data.matchAll(regex);

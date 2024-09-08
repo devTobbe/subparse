@@ -1,5 +1,5 @@
 import { Caption, ParseOptions } from "../config/parseOptions";
-import { regexUtils } from "../utils/regexUtils";
+import { regexParse } from "../utils/regexUtils";
 
 /**
  * Parses SRT subtitle data into a JSON string.
@@ -8,7 +8,7 @@ import { regexUtils } from "../utils/regexUtils";
  * @returns {string} - JSON string of parsed subtitles.
  */
 export function parseSRT(data: string, options: ParseOptions): string {
-  const regex = regexUtils.srtRegex;
+  const regex = regexParse.srt;
   const parsedSubs: Caption[] = [];
   const matches = data.matchAll(regex);
 
