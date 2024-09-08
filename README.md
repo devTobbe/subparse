@@ -36,14 +36,24 @@ To use **SubParse** in your project, follow these steps:
 
 3. **Call `parseFile`:**
 
-   Use the `parseFile` function to parse your subtitle files. Provide the file name, file content, and chosen preset.
+   Use the `parseFile` function to parse your subtitle files. Provide the file content and chosen preset.
+
+   The library automatically detects the subtitle format (e.g., SRT, VTT, ASS) based on the content. You don't need to specify the format explicitly.
+
+   In this example this files content is used:
+
+   ```srt
+   1
+   00:00:01,000 --> 00:00:04,000
+   Hello, world!`
+   ```
+
+   Example in code, where the "full" preset is used:
 
    ```typescript
-   const fileName = "example.srt";
-   const fileContent = `1\n00:00:01,000 --> 00:00:04,000\nHello, world!`;
-   const preset = "full"; // Choose from the list of presets
+   import { parseFile } from "subparse";
 
-   const jsonOutput = parseFile(fileName, fileContent, preset);
+   const jsonOutput = parseFile(fileContent, "full");
    console.log(jsonOutput);
    ```
 
@@ -80,5 +90,5 @@ To use **SubParse** in your project, follow these steps:
 - [ ] support for .sub
 - [x] support for .vtt
 - [x] restructure codebase
-- [ ] add automatic format detection
+- [x] add automatic format detection
 - [x] add ci/cd
