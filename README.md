@@ -81,4 +81,4 @@ To use **SubParse** in your project, follow these steps:
 - [x] support for .vtt
 - [x] restructure codebase
 - [ ] add automatic format detection
-- [ ] add ci/cd
+- [x] add ci/cd
