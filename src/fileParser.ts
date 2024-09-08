@@ -10,10 +10,6 @@ export type ParserFunction = (content: string, options: ParseOptions) => string;
  * A mapping of file extensions to their corresponding parsing functions.
  */
 const Parsers: Record<string, ParserFunction> = {
-  ".srt": parseSRT,
-  ".ass": parseASS,
-  ".ssa": parseASS,
-  ".vtt": parseVTT,
 };
 
 /**
