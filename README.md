@@ -75,8 +75,7 @@ To use **SubParse** in your project, follow these steps:
 - .srt
 - .ass
 - .ssa
-- .vtt (maybe)
-- .sub (maybe)
+- .vtt
 
 ## ✅ TODO
 
@@ -87,7 +86,6 @@ To use **SubParse** in your project, follow these steps:
 - [x] Rework with regex (Why didn't I use this from the start..?)
 - [x] Refactor for easy scaleability
 - [x] Allow users to customize the output JSON format.
-- [ ] support for .sub
 - [x] support for .vtt
 - [x] restructure codebase
 - [x] add automatic format detection
