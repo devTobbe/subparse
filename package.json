@@ -6,9 +6,17 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "release": "pnpm run build && changeset publish",
-    "lint": "tsc"
+    "build": "tsup index.ts --format cjs,esm --dts",
+    "release": "npm run build && changeset publish",
+    "lint": "tsc",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.4.1",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.4",
+    "typescript": "^5.5.4"
   },
   "keywords": [
     "subtitles",
@@ -18,20 +26,6 @@
     "vtt",
     "typescript"
   ],
-  "repository": {
-    "url": "https://github.com/devTobbe/subparse"
-  },
   "author": "devTobbe",
-  "license": "MIT",
-  "devDependencies": {
-    "@changesets/cli": "^2.27.8",
-    "@types/jest": "^29.5.12",
-    "@types/node": "^22.4.1",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.2.4",
-    "typescript": "^5.5.4"
-  },
-  "dependencies": {
-    "tsup": "^8.2.4"
-  }
+  "license": "MIT"
 }
