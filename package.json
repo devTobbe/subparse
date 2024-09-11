@@ -1,5 +1,5 @@
 {
-  "name": "@devtobbe/SubParse",
+  "name": "subparse",
   "version": "0.0.1",
   "description": "SubParse is a TypeScript library that converts different subtitle files into a standardized JSON object.",
   "main": "dist/index.js",
