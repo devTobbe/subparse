@@ -1,6 +1,6 @@
 {
   "name": "SubParse",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "SubParse is a TypeScript library that converts different subtitle files into a standardized JSON object.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
