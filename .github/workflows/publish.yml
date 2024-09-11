@@ -1,9 +1,8 @@
-name: Continous Deployment
+name: Continuous Deployment
 
 on:
   workflow_run:
     workflows: [Continuous Integration]
-    branches: [main]
     types: [completed]
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
@@ -22,9 +21,17 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: "npm"
 
-      - run: npm install --frozen-lockfile
+      - name: Cache npm modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - run: npm ci
+
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
