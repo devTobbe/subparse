@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
 
       - name: Cache npm modules
         uses: actions/cache@v3
@@ -30,7 +30,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - run: npm install
+      - run: npm ci
 
       - name: Create Release Pull Request or Publish
         id: changesets
@@ -40,3 +40,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create Pull Request
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const pr = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Release Changes',
+              head: 'changeset-release/main',
+              base: 'main'
+            });
+            console.log(`Pull request created: ${pr.data.html_url}`);
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
