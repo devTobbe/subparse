@@ -24,6 +24,9 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Create .npmrc
+        run: echo "@devtobbe:registry=https://registry.npmjs.org/" > ~/.npmrc && echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+
       - run: npm install --frozen-lockfile
 
       - name: Create Release Pull Request or Publish
