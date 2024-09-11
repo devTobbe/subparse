@@ -3,6 +3,7 @@ name: Continuous Deployment
 on:
   workflow_run:
     workflows: [Continuous Integration]
+    branches: [main]
     types: [completed]
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
@@ -21,16 +22,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
+          cache: "npm"
 
-      - name: Cache npm modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - run: npm install
+      - run: npm install --frozen-lockfile
 
       - name: Create Release Pull Request or Publish
         id: changesets
@@ -38,21 +32,5 @@ jobs:
         with:
           publish: npm run release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Create Pull Request
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const pr = await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: 'Release Changes',
-              head: 'changeset-release/main',
-              base: 'main'
-            });
-            console.log(`Pull request created: ${pr.data.html_url}`);
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
