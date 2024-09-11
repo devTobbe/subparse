@@ -11,7 +11,11 @@ A TypeScript library for parsing subtitle files in `.srt`, `.ass`, and `.ssa` fo
 
 ## 📦 Installation
 
-Homie I aint there yet frfr ong
+You can install SubParse via npm. Run the following command in your terminal:
+
+```bash
+npm install subparse
+```
 
 ## 📜 Usage Instructions
 
@@ -48,27 +52,27 @@ To use **SubParse** in your project, follow these steps:
    Hello, world!`
    ```
 
-   Example in code, where the "full" preset is used:
+Example in code, where the "full" preset is used:
 
-   ```typescript
-   import { parseFile } from "subparse";
+```typescript
+import { parseFile } from "subparse";
 
-   const jsonOutput = parseFile(fileContent, "full");
-   console.log(jsonOutput);
-   ```
+const jsonOutput = parseFile(fileContent, "full");
+console.log(jsonOutput);
+```
 
-   Which will result in the following output:
+Which will result in the following output:
 
-   ```json
-   [
-     {
-       "line": 1,
-       "start": "00:00:01,000",
-       "end": "00:00:04,000",
-       "text": "Hello, world!"
-     }
-   ]
-   ```
+```json
+[
+  {
+    "line": 1,
+    "start": "00:00:01,000",
+    "end": "00:00:04,000",
+    "text": "Hello, world!"
+  }
+]
+```
 
 ## 🗂️ Planned Supported formats
 
