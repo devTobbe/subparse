@@ -1,8 +1,8 @@
-name: SubParse Continous Deployment
+name: Continous Deployment
 
 on:
   workflow_run:
-    workflows: [CI]
+    workflows: [Continuous Integration]
     branches: [main]
     types: [completed]
 
