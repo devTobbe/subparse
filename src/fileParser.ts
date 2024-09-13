@@ -38,7 +38,7 @@ export function parseFile(fileContent: string, preset: string): string {
     default:
       throw new Error(
         "Unsupported file format. Please provide files in formats: " +
-          Object.keys(Parsers).join(", "),
+          Object.keys(Parsers).join(", ")
       );
   }
 }
